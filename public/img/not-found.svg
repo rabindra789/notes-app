@@ -1,0 +1,12 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .text { font: bold 24px sans-serif; }
+        .subtext { font: 16px sans-serif; }
+    </style>
+    <rect width="400" height="300" fill="#f2f2f2"/>
+    <circle cx="200" cy="120" r="80" fill="white" stroke="#007BFF" stroke-width="10"/>
+    <circle cx="200" cy="120" r="50" fill="#007BFF"/>
+    <line x1="270" y1="190" x2="330" y2="250" stroke="#007BFF" stroke-width="10"/>
+    <text x="200" y="250" class="text" text-anchor="middle" fill="#333">404</text>
+    <text x="200" y="280" class="subtext" text-anchor="middle" fill="#333">Page Not Found</text>
+</svg>
