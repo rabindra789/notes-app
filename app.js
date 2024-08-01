@@ -1,24 +1,47 @@
 require("dotenv").config();
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
+const connectDB = require("./server/config/db.js");
+const session = require("express-session");
+const passport = require("passport");
+const mongoStore = require("connect-mongo");
+const { default: mongoose } = require("mongoose");
 
 const app = express();
 const PORT = 8000 || process.env.PORT;
 
+app.use(
+  session({
+    secret: "rabindra789",
+    resave: false,
+    saveUninitialized: true,
+    store: mongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+    }),
+    cookie: {maxAge: new Date(Date.now() + 604800000)}
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// connect database
+connectDB();
 
 app.use(express.static("public"));
 app.use(expressLayouts);
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
 
-
-app.use("/", require("./server/routes/index.route.js"))
-app.use("/", require("./server/routes/dashboard.route.js"))
+app.use("/", require("./server/routes/auth.route.js"));
+app.use("/", require("./server/routes/index.route.js"));
+app.use("/", require("./server/routes/dashboard.route.js"));
 
 app.get("*", function (req, res) {
-    res.status(404).render("404")
-})
+  res.status(404).render("404");
+});
 
-app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`))
+app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
