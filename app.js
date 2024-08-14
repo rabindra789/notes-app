@@ -12,7 +12,7 @@ const PORT = 8000 || process.env.PORT;
 
 app.use(
   session({
-    secret: "rabindra789",
+    secret: process.env.SECRET_SESSION,
     resave: false,
     saveUninitialized: true,
     store: mongoStore.create({
