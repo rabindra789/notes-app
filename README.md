@@ -35,6 +35,8 @@ A simple notes application built with Node.js and Express.js. This app allows us
 3. Create a `.env` file in the root directory and add your environment variables:
 
    ```env
+   PORT=<port>
+   SECRET_SESSION=<your-session-secret>
    MONGODB_URI=<your-mongodb-uri>
    SESSION_SECRET=<your-session-secret>
    GOOGLE_CLIENT_ID=<your-google-client-id>
@@ -47,7 +49,7 @@ A simple notes application built with Node.js and Express.js. This app allows us
    npm start
    ```
 
-   The app will be available at `http://localhost:3000`.
+   The app will be available at `http://localhost:<PORT>`.
 
 ## Dependencies
 
