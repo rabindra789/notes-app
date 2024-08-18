@@ -1,45 +1,80 @@
 <div class="container-fluid container-fluid-custom pb-5 mb-5">
     <div class="row mb-4">
         <div class="col">
-            <h1>Hey, <%= username %>
-            </h1>
+            <h1>Hey, <%= username %></h1>
         </div>
-        <div class="col tex-end">
+        <div class="col text-end">
             <a href="/dashboard/add" class="btn btn-primary">+ New note</a>
         </div>
     </div>
     <div class="row">
-        <% if (notes.length > 0) { for (let i=0; i < notes.length; i++) { %>
-
-            <div class="col-sm-3 mb-4">
-
-                <div class="card border-primary" style="min-height: 210px;">
-                    <a href="/dashboard/item<%= notes[i]._id %>" class="card-body text-decoration-none">
-                        <h5 class="card-title">
-                            <%= notes[i].title %>
-                        </h5>
-                        <p class="card-text">
-                            <%= notes[i].body%>
-                        </p>
-                    </a>
+        <% if (notes.length > 0) { %>
+            <% notes.forEach(note => { %>
+                <div class="col-sm-3 mb-4">
+                    <div class="card border-primary" style="min-height: 210px;">
+                        <a href="/dashboard/item/<%= note._id %>" class="card-body text-decoration-none">
+                            <h5 class="card-title"><%= note.title %></h5>
+                            <p class="card-text"><%= note.body %></p>
+                        </a>
+                    </div>
                 </div>
-
+            <% }) %>
+        <% } else { %>
+            <div class="row">
+                <div class="col-3">
+                    <img src="img/human3.svg" alt="Human pointing hand toward a create button">
+                </div>
+                <div class="col mt-md-4">
+                    <h2>Okay...</h2>
+                    <h4>Let's start with your first note! <br><br>
+                        <a href="/dashboard/add">Create one</a>
+                    </h4>
+                </div>
             </div>
+        <% } %>
+    </div>
+    
 
-            <% }} else { %>
-                <div class="row">
-                    <div class="col-3">
-                        <img src="img/human3.svg" alt="Human pointing hand toward a create button">
-                    </div>
-
-                    <div class="col mt-md-4">
-                        <h2>Okay...</h2>
-                        <h4>Let's start with your first note! <br /> <br />
-                            <a href="/dashboard/add">Create one</a>
-                        </h4>
-                    </div>
-                </div>
+    <% if (notes.length > 0) { %>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <% if (current == 1) { %>
+                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                <% } else { %>
+                    <li class="page-item"><a class="page-link" href="/dashboard?page=<%= current - 1 %>">Previous</a></li>
                 <% } %>
 
-    </div>
+                <% var start = Math.max(1, current - 4); %>
+                <% var end = Math.min(start + 9, pages); %>
+
+                <% if (start > 1) { %>
+                    <li class="page-item"><a class="page-link" href="/dashboard?page=1">1</a></li>
+                    <% if (start > 2) { %>
+                        <li class="page-item"><span class="page-link">...</span></li>
+                    <% } %>
+                <% } %>
+
+                <% for (var i = start; i <= end; i++) { %>
+                    <% if (i == current) { %>
+                        <li class="page-item active"><a class="page-link" href="#"><%= i %></a></li>
+                    <% } else { %>
+                        <li class="page-item"><a class="page-link" href="/dashboard?page=<%= i %>"><%= i %></a></li>
+                    <% } %>
+                <% } %>
+
+                <% if (end < pages) { %>
+                    <% if (end < pages - 1) { %>
+                        <li class="page-item"><span class="page-link">...</span></li>
+                    <% } %>
+                    <li class="page-item"><a class="page-link" href="/dashboard?page=<%= pages %>"><%= pages %></a></li>
+                <% } %>
+
+                <% if (current < pages) { %>
+                    <li class="page-item"><a class="page-link" href="/dashboard?page=<%= current + 1 %>">Next</a></li>
+                <% } else { %>
+                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    <% } %>
 </div>
